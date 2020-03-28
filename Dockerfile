@@ -18,3 +18,9 @@ RUN ln -s /opt/netbox-2.7.11 /opt/netbox
 RUN adduser --system --group netbox && chown -R netbox /opt/netbox/netbox/media
 
 RUN pip3 install -r /opt/netbox/requirements.txt && pip3 install napalm
+
+COPY configuration.py /opt/netbox/netbox/netbox
+
+RUN python3 /opt/netbox/netbox/manage.py collectstatic --no-input
+
+CMD tail -f /dev/null
