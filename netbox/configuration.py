@@ -16,7 +16,7 @@ DATABASE = {
     'NAME': 'netbox',         # Database name
     'USER': 'netbox',         # PostgreSQL username
     'PASSWORD': 'J5brHrAXFLQSif0K', # PostgreSQL password
-    'HOST': 'moby.yzguy.io',      # Database server
+    'HOST': 'netbox-postgres',      # Database server
     'PORT': '',               # Database port (leave blank for default)
     'CONN_MAX_AGE': 300,      # Max database connection age
 }
@@ -26,7 +26,7 @@ DATABASE = {
 # to use two separate database IDs.
 REDIS = {
     'tasks': {
-        'HOST': 'moby.yzguy.io',
+        'HOST': 'netbox-redis',
         'PORT': 6379,
         # Comment out `HOST` and `PORT` lines and uncomment the following if using Redis Sentinel
         # 'SENTINELS': [('mysentinel.redis.example.com', 6379)],
@@ -37,7 +37,7 @@ REDIS = {
         'SSL': False,
     },
     'caching': {
-        'HOST': 'moby.yzguy.io',
+        'HOST': 'netbox-redis',
         'PORT': 6379,
         # Comment out `HOST` and `PORT` lines and uncomment the following if using Redis Sentinel
         # 'SENTINELS': [('mysentinel.redis.example.com', 6379)],

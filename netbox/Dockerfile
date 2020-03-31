@@ -20,7 +20,14 @@ RUN adduser --system --group netbox && chown -R netbox /opt/netbox/netbox/media
 RUN pip3 install -r /opt/netbox/requirements.txt && pip3 install napalm
 
 COPY configuration.py /opt/netbox/netbox/netbox
+COPY gunicorn.py /opt/netbox/gunicorn.py
 
 RUN python3 /opt/netbox/netbox/manage.py collectstatic --no-input
 
-CMD tail -f /dev/null
+VOLUME /opt/netbox/netbox/static
+
+EXPOSE 8001/tcp
+
+ENTRYPOINT ["/usr/local/bin/gunicorn", "--pythonpath", "/opt/netbox/netbox", "--config", "/opt/netbox/gunicorn.py", "netbox.wsgi"]
+
+#CMD tail -f /dev/null
