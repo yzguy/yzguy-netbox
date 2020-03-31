@@ -1,0 +1,18 @@
+[Unit]
+Description=Redis Server
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+ExecStartPre=-/usr/bin/docker stop %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStartPre=/usr/bin/docker pull redis:5-alpine
+ExecStart=/usr/bin/docker run --name %n -p 6379:6379 -v /opt/redis/netbox/data:/data \
+ --network=netbox --net-alias netbox-redis \
+ redis:5-alpine --appendonly yes 
+
+
+[Install]
+WantedBy=multi-user.target

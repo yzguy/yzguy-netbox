@@ -1,0 +1,16 @@
+[Unit]
+Description=Netbox RQ
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+ExecStartPre=-/usr/bin/docker stop %n
+ExecStartPre=-/usr/bin/docker rm %n
+#ExecStartPre=/usr/bin/docker pull redis:5-alpine
+ExecStart=/usr/bin/docker run --name %n --network=netbox --net-alias netbox-rq netbox-rq
+
+
+[Install]
+WantedBy=multi-user.target

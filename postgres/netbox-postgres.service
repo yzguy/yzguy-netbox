@@ -1,0 +1,21 @@
+[Unit]
+Description=Postgresql Server
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+ExecStartPre=-/usr/bin/docker stop %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStartPre=/usr/bin/docker pull postgres:11-alpine
+ExecStart=/usr/bin/docker run --name %n -p 5432:5432 -v /opt/postgresql/netbox/data/:/var/lib/postgresql/data/ \
+ --network=netbox --net-alias netbox-postgres \
+ -e POSTGRES_USER=netbox \
+ -e POSTGRES_PASSWORD=J5brHrAXFLQSif0K \
+ -e POSTGRES_DB=netbox \
+ postgres:11-alpine
+
+
+[Install]
+WantedBy=multi-user.target

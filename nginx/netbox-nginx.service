@@ -1,0 +1,17 @@
+[Unit]
+Description=Nginx
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+Restart=always
+ExecStartPre=-/usr/bin/docker stop %n
+ExecStartPre=-/usr/bin/docker rm %n
+ExecStart=/usr/bin/docker run --name %n -p 80:8080 \
+  --volumes-from=netbox.service \
+  --network=netbox --net-alias netbox-nginx netbox-nginx
+
+
+[Install]
+WantedBy=multi-user.target
